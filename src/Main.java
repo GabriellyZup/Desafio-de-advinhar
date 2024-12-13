@@ -32,9 +32,9 @@ public class Main {
 
     public static int verificarPalpite(int numeroSorteado, int palpite) {
         if (palpite == numeroSorteado) {
-            System.out.println(" Parabéns! Você acertou!");
+            System.out.println("Parabéns! Você acertou!");
             return 10;
-        } else if (palpite == numeroSorteado - 1 || palpite == numeroSorteado + 1) {
+        } else if (Math.abs(palpite - numeroSorteado) == 1) {
             System.out.println("Errou por um! Tente novamente");
             return 5;
         } else {
