@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -32,15 +33,15 @@ public class Main {
         while (!entradaValida) {
             System.out.print("Digite seu palpite (1 a 10): ");
 
-            if (scanner.hasNext()) {
-                palpite = scanner.nextInt();
+            try{
+                palpite = scanner.nextInt();//tenta ler numeor
                 if (palpite >= 1 && palpite <= 10) {
                     entradaValida = true;
                 } else {
                     System.out.println("Número fora do intervalo.");
                 }
 
-            } else {
+            } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida! Digite apenas númeoros.");
                 scanner.next(); //limpa entrada inválida
             }
