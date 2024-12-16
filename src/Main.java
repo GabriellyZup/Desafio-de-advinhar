@@ -26,36 +26,31 @@ public class Main {
 
         while (continuarJogando) {
             int numeroSorteado = sortearNumero(nivelDificuldade);
-            //System.out.println("Número sorteado: " + numeroSorteado);
+            System.out.println("Número sorteado: " + numeroSorteado);
 
             int palpite = obterPalpiteDoUsuario(scanner, nivelDificuldade);
             int pontos = verificarPalpite(numeroSorteado, palpite);
-
             pontuacaoTotal += pontos;
             if (pontos == 10) {
                 acertos.add(numeroSorteado);
             } else {
                 erros.add(numeroSorteado);
             }
-
             System.out.println("Pontuação total: " + pontuacaoTotal);
             System.out.println("Deseja jogar novamente? (s/n): ");
             continuarJogando = scanner.next().equalsIgnoreCase("s");
         }
-
         System.out.println("Fim do jogo!");
         System.out.println("Pontuação final: " + pontuacaoTotal);
         System.out.println("Números acertados: " + acertos);
         System.out.println("Números errados: " + erros);
     }
-
     public static int escolherNivelDificuldade(Scanner scanner) {
         System.out.println("Escolha o nível de dificuldade:");
         System.out.println("1. Fácil (1 a 10)");
         System.out.println("2. Médio (1 a 50)");
         System.out.println("3. Difícil (1 a 100)");
         int escolha = scanner.nextInt();
-
         switch (escolha) {
             case 1:
                 return 10;
@@ -73,6 +68,7 @@ public class Main {
         Random random = new Random();
         return random.nextInt(intervalo) + 1;
     }
+
 /*
         int intervaloInicio = 1;
         int intervaloFim = 10;
@@ -92,14 +88,23 @@ public class Main {
  */
 
     public static int obterPalpiteDoUsuario(Scanner scanner, int intervalo) {
-        System.out.println("Digite seu palpite: (entre 1 e" + intervalo + "): ");
-        return scanner.nextInt();
-        //int maxPalpite = (nivelDificuldade == 1) ? 10 : (nivelDificuldade == 2) ? 50 : 100;
-       // while (palpite < 1 || palpite > intervalo) {
-       //     System.out.println("Palpite inválido. Tente novamente!");
-        //    palpite = scanner.nextInt();
-        //}
-        //return palpite;
+        int palpite = -1;
+        while (true){
+            System.out.println("Digite seu palpite: (entre 1 e " + intervalo + "): ");
+            //return scanner.nextInt();
+            if (scanner.hasNext()) {
+                palpite = scanner.nextInt();
+                if (palpite >= 1 && palpite <= intervalo) {
+                    break;
+                } else {
+                    System.out.println("Palpite inválido. Tente novamente!");
+                }
+            } else {
+                System.out.println("Entrada inválida. Por favor, digite um número inteiro");
+                scanner.next(); //clear
+            }
+        }
+        return palpite;
     }
 
     public static int verificarPalpite(int numeroSorteado, int palpite) {
