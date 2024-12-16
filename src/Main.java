@@ -12,24 +12,14 @@ public class Main {
         List<Integer> acertos = new ArrayList<>();
         List<Integer> erros = new ArrayList<>();
         boolean continuarJogando = true;
-/*
-    private static int nivelDificuldade = 1;
-    private static ArrayList<Integer> numerosAcertados = new ArrayList<>();
-    private static ArrayList<Integer> numerosErrados = new ArrayList<>();
-    private static int pontuacaoTotal = 0;
-*/
-
-
 
         int nivelDificuldade = escolherNivelDificuldade(scanner);
-
-
         while (continuarJogando) {
             int numeroSorteado = sortearNumero(nivelDificuldade);
-            System.out.println("Número sorteado: " + numeroSorteado);
+            System.out.println("Número sorteado para teste " + numeroSorteado);
 
             int palpite = obterPalpiteDoUsuario(scanner, nivelDificuldade);
-            int pontos = verificarPalpite(numeroSorteado, palpite);
+            int pontos = verificarPalpite(numeroSorteado, palpite, nivelDificuldade);
             pontuacaoTotal += pontos;
             if (pontos == 10) {
                 acertos.add(numeroSorteado);
@@ -37,6 +27,12 @@ public class Main {
                 erros.add(numeroSorteado);
             }
             System.out.println("Pontuação total: " + pontuacaoTotal);
+
+            if (pontuacaoTotal % 50 == 0) {
+                System.out.println("Você atingiu " + pontuacaoTotal + " pontos!");
+                nivelDificuldade = escolherNivelDificuldade(scanner);
+            }
+
             System.out.println("Deseja jogar novamente? (s/n): ");
             continuarJogando = scanner.next().equalsIgnoreCase("s");
         }
@@ -69,29 +65,10 @@ public class Main {
         return random.nextInt(intervalo) + 1;
     }
 
-/*
-        int intervaloInicio = 1;
-        int intervaloFim = 10;
-
-        switch (intervalo) {
-            case 2:
-                intervaloFim = 50;
-                break;
-            case 3:
-                intervaloFim = 100;
-                break;
-        }
-
-        return random.nextInt(intervaloFim - intervaloInicio + 1) + intervaloInicio;
-    }
-
- */
-
     public static int obterPalpiteDoUsuario(Scanner scanner, int intervalo) {
         int palpite = -1;
         while (true){
             System.out.println("Digite seu palpite: (entre 1 e " + intervalo + "): ");
-            //return scanner.nextInt();
             if (scanner.hasNext()) {
                 palpite = scanner.nextInt();
                 if (palpite >= 1 && palpite <= intervalo) {
@@ -107,18 +84,15 @@ public class Main {
         return palpite;
     }
 
-    public static int verificarPalpite(int numeroSorteado, int palpite) {
+    public static int verificarPalpite(int numeroSorteado, int palpite, int nivelDificuldade) {
         if (palpite == numeroSorteado) {
             System.out.println("Parabéns, você acertou!");
-            //numerosAcertados.add(numeroSorteado);
             return 10;
         } else if (Math.abs(palpite - numeroSorteado) == 1) {
             System.out.println("Errou por 1!");
-            //numerosErrados.add(numeroSorteado);
             return 5;
         } else {
             System.out.println("Errou feio!");
-            //numerosErrados.add(numeroSorteado);
             return 0;
         }
     }
